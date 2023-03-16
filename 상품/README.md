@@ -19,6 +19,7 @@ Front 서버와 Back(API) 서버 코드를 구분 짓기 위해 아이콘 설정
 <br/>
 
 **상품 등록 모달 창 화면**
+
 <img width="822" alt="Screenshot 2023-03-16 at 6 36 26 PM" src="https://user-images.githubusercontent.com/87689191/225576062-5eccca01-0fb7-43c6-9c76-9504f07415ca.png">
 <img width="832" alt="Screenshot 2023-03-16 at 6 36 36 PM" src="https://user-images.githubusercontent.com/87689191/225576076-a6f5c7ed-6f35-4fcd-89c4-62057551e9ea.png">
 
