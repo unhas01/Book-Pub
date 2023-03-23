@@ -204,4 +204,289 @@ $ mv ./mysql-connector-java-8.0.18/mysql-connector-java-8.0.18.jar ./lib/mysql-c
 $ rm -rf mysql-connector-java-8.0.18
 ```
 
+--- 
+
+### 📌 인덱스, logstash 설정
+
+- 상품 인덱스
+```
+PUT /book_pub_product_dev
+{
+  "settings": {
+    "index": {
+      "number_of_shards": 3,
+      "number_of_replicas": 1,
+      "analysis": {
+        "filter": {
+          "suggest_filter": {
+            "type": "edge_ngram",
+            "min_gram": 1,
+            "max_gram": 50
+          },
+          "synonym_filter": {
+            "type": "synonym",
+            "synonyms_path": "analysis/book_pub_synonym.txt",
+            "updateable": true
+          }
+        },
+        "tokenizer": {
+          "jaso_search_tokenizer": {
+            "type": "jaso_tokenizer",
+            "mistype": true,
+            "chosung": false
+          },
+          "jaso_index_tokenizer": {
+            "type": "jaso_tokenizer",
+            "mistype": true,
+            "chosung": true
+          },
+          "nori_t_discard": {
+            "type": "nori_tokenizer",
+            "decompound_mode": "discard"
+          }
+        },
+        "analyzer": {
+          "suggest_search_analyzer": {
+            "type": "custom",
+            "tokenizer": "jaso_search_tokenizer",
+            "filter": [
+              "synonym_filter"
+            ]
+          },
+          "suggest_index_analyzer": {
+            "type": "custom",
+            "tokenizer": "jaso_index_tokenizer",
+            "filter": [
+              "suggest_filter",
+              "remove_duplicates"
+            ]
+          },
+          "nori_discard": {
+            "tokenizer": "nori_t_discard",
+            "filter": [
+              "suggest_filter",
+              "remove_duplicates"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "id": {
+        "type": "long"
+      },
+      "title": {
+        "type": "keyword"
+      },
+      "titlenori": {
+        "type": "text", 
+        "analyzer": "nori_discard"
+      },
+      "titlejaso": {
+        "type": "text", 
+        "analyzer": "suggest_index_analyzer"
+      },
+      "salesprice": {
+        "type": "long"
+      },
+      "salesrate": {
+        "type": "integer"
+      },
+      "filepath": {
+        "type": "keyword"
+      }
+    }
+  }
+}
+```
+
+- 고객서비스 인덱스
+```
+PUT /book_pub_cs_dev
+{
+  "settings": {
+    "index": {
+      "number_of_shards": 3,
+      "number_of_replicas": 1,
+      "analysis": {
+        "filter": {
+          "suggest_filter": {
+            "type": "edge_ngram",
+            "min_gram": 1,
+            "max_gram": 50
+          }
+        },
+        "tokenizer": {
+          "jaso_search_tokenizer": {
+            "type": "jaso_tokenizer",
+            "mistype": true,
+            "chosung": false
+          },
+          "jaso_index_tokenizer": {
+            "type": "jaso_tokenizer",
+            "mistype": true,
+            "chosung": true
+          },
+          "nori_t_discard": {
+            "type": "nori_tokenizer",
+            "decompound_mode": "discard"
+          }
+        },
+        "analyzer": {
+          "suggest_search_analyzer": {
+            "type": "custom",
+            "tokenizer": "jaso_search_tokenizer"
+          },
+          "suggest_index_analyzer": {
+            "type": "custom",
+            "tokenizer": "jaso_index_tokenizer",
+            "filter": [
+              "suggest_filter",
+              "remove_duplicates"
+            ]
+          },
+          "nori_discard": {
+            "tokenizer": "nori_t_discard",
+            "filter": [
+              "suggest_filter",
+              "remove_duplicates"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "csid": {
+        "type": "integer"
+      },
+      "cscodename": {
+        "type": "keyword"
+      },
+      "cstitle": {
+        "type": "keyword"
+      },
+      "cstitlejaso": {
+        "type": "text",
+        "analyzer": "suggest_index_analyzer"
+      },
+      "cstitlenori": {
+        "type": "text",
+        "analyzer": "nori_discard"
+      },
+      "cscontentjaso": {
+        "type": "text",
+        "analyzer": "suggest_index_analyzer"
+      },
+      "cscontentnori": {
+        "type": "text",
+        "analyzer": "nori_discard"
+      },
+      "cscategory": {
+        "type": "keyword"
+      },
+      "csdate": {
+        "type": "date"
+      }
+    }
+  }
+}
+```
+
+- 상품 Logstash
+```
+input {
+  jdbc {
+        jdbc_driver_library => "/usr/share/logstash/bin/book-pub/mysql-connector-java-8.0.18.jar"
+        jdbc_driver_class => "com.mysql.cj.jdbc.Driver"
+        jdbc_connection_string => "jdbc:mysql://133.186.151.141:3306/bookpub_shop_dev?serverTimezone=UTC"
+        jdbc_user => "bookpub"
+        jdbc_password => "3wX.DPUpjpdSn@d."
+        use_column_value => true
+        tracking_column => "p.product_number"
+        last_run_metadata_path => "/usr/share/logstash/index_metadata/book_pub_product_dev.dat"
+        statement => "SELECT      p.product_number AS id,
+                                  p.product_title AS title,
+                                  p.product_title AS titlejaso,
+                                  p.product_title AS titlenori,
+                                  p.product_sales_price AS salesprice,
+                                  p.product_sales_rate AS salesrate,
+                                  f.file_path AS filepath
+                      FROM product AS p
+                      LEFT JOIN file AS f on f.product_number = p.product_number
+                      WHERE p.product_number >= :sql_last_value AND f.file_category = 'thumbnail' OR f.file_category is null ORDER BY p.product_number ASC"
+        schedule => "* * * * *"
+ }
+}
+
+filter {
+  mutate {
+    copy => { "id" => "[@metadata][_id]"}
+    remove_field => ["@version", "@timestamp"] }
+}
+
+output {
+  elasticsearch {
+    hosts => ["133.186.210.108:9200"]
+    index => "book_pub_product_dev"
+    document_id => "%{[@metadata][_id]}"
+    doc_as_upsert => true
+    action => update
+  }
+ stdout {
+    codec => rubydebug
+ }
+}
+```
+
+- 고객 서비스 Logstash
+```
+input {
+  jdbc {
+        jdbc_driver_library => "/usr/share/logstash/bin/book-pub/mysql-connector-java-8.0.18.jar"
+        jdbc_driver_class => "com.mysql.cj.jdbc.Driver"
+        jdbc_connection_string => "jdbc:mysql://133.186.151.141:3306/bookpub_shop_prod?serverTimezone=UTC"
+        jdbc_user => "bookpub"
+        jdbc_password => "3wX.DPUpjpdSn@d."
+        use_column_value => true
+        tracking_column => "cs.customer_service_number"
+        last_run_metadata_path => "/usr/share/logstash/index_metadata/book_pub_cs_prod.dat"
+        statement => "SELECT      cs.customer_service_number AS csid,
+                                  csc.customer_service_state_code_info AS cscodename,
+                                  cs.customer_service_title as cstitle,
+                                  cs.customer_service_title as cstitlejaso,
+                                  cs.customer_service_title as cstitlenori,
+                                  cs.customer_service_content as cscontentjaso,
+                                  cs.customer_service_content as cscontentnori,
+                                  cs.customer_service_category as cscategory,
+                                  cs.created_at as csdate
+                        FROM customer_service AS cs
+                        LEFT JOIN customer_service_state_code AS csc ON csc.customer_service_state_code_number = cs.customer_service_code_number
+                      WHERE cs.customer_service_number >= :sql_last_value ORDER BY cs.customer_service_number ASC"
+        schedule => "* * * * *"
+ }
+}
+
+filter {
+  mutate {
+    copy => { "id" => "[@metadata][_id]"}
+    remove_field => ["@version", "@timestamp"] }
+}
+
+output {
+  elasticsearch {
+    hosts => ["133.186.210.108:9200"]
+    index => "book_pub_cs_prod"
+    document_id => "%{[@metadata][_id]}"
+    doc_as_upsert => true
+    action => update
+  }
+ stdout {
+    codec => rubydebug
+ }
+}
+```
 
