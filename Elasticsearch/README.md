@@ -483,9 +483,168 @@ public class ProductHit {
 - 위 방법은 비효율적일 것
 - logstash가 이를 해결
 
+```
+입력(Inputs)  ➡️  필터(Filters)  ➡️  출력(Outputs)
+```
 
+MySQL connector를 활용해 DB에서 데이터를 가져오면 됩니다.
 
+```
+input {
+  jdbc {
+        jdbc_driver_library => "/usr/share/logstash/bin/book-pub/mysql-connector-java-8.0.18.jar"
+        jdbc_driver_class => "com.mysql.cj.jdbc.Driver"
+        jdbc_connection_string => "jdbc:mysql://133.186.151.141:3306/bookpub_shop_dev?serverTimezone=UTC"
+        jdbc_user => "bookpub"
+        jdbc_password => "3wX.DPUpjpdSn@d."
+        use_column_value => true
+        tracking_column => "p.product_number"
+        last_run_metadata_path => "/usr/share/logstash/index_metadata/book_pub_product_dev.dat"
+        statement => "SELECT      p.product_number AS id,
+                                  p.product_title AS title,
+                                  p.product_title AS titlejaso,
+                                  p.product_title AS titlenori,
+                                  p.product_sales_price AS salesprice,
+                                  p.product_sales_rate AS salesrate,
+                                  f.file_path AS filepath
+                      FROM product AS p
+                      LEFT JOIN file AS f on f.product_number = p.product_number
+                      WHERE p.product_number >= :sql_last_value AND f.file_category = 'thumbnail' OR f.file_category is null ORDER BY p.product_number ASC"
+        schedule => "* * * * *"
+ }
+}
 
+filter {
+  mutate {
+    copy => { "id" => "[@metadata][_id]"}
+    remove_field => ["@version", "@timestamp"] }
+}
+
+output {
+  elasticsearch {
+    hosts => ["133.186.210.108:9200"]
+    index => "book_pub_product_dev"
+    document_id => "%{[@metadata][_id]}"
+    doc_as_upsert => true
+    action => update
+  }
+ stdout {
+    codec => rubydebug
+ }
+}
+```
+
+프로젝트에서 적용한 logstash입니다. input부터 하나씩 보겠습니다.
+
+<br>
+<br>
+
+**input**
+
+```
+input {
+  jdbc {
+        jdbc_driver_library => "/usr/share/logstash/bin/book-pub/mysql-connector-java-8.0.18.jar"
+        jdbc_driver_class => "com.mysql.cj.jdbc.Driver"
+        jdbc_connection_string => "jdbc:mysql://133.186.151.141:3306/bookpub_shop_dev?serverTimezone=UTC"
+        jdbc_user => "bookpub"
+        jdbc_password => "3wX.DPUpjpdSn@d."
+        use_column_value => true
+        tracking_column => "p.product_number"
+        last_run_metadata_path => "/usr/share/logstash/index_metadata/book_pub_product_dev.dat"
+        statement => "SELECT      p.product_number AS id,
+                                  p.product_title AS title,
+                                  p.product_title AS titlejaso,
+                                  p.product_title AS titlenori,
+                                  p.product_sales_price AS salesprice,
+                                  p.product_sales_rate AS salesrate,
+                                  f.file_path AS filepath
+                      FROM product AS p
+                      LEFT JOIN file AS f on f.product_number = p.product_number
+                      WHERE p.product_number >= :sql_last_value AND f.file_category = 'thumbnail' OR f.file_category is null ORDER BY p.product_number ASC"
+        schedule => "* * * * *"
+ }
+}
+```
+
+* 위 5개 `mysql-connector-java` 세팅
+* `use_column_value` : `:sql_last_value` 사용 가능
+* `tracking_column` : 어디까지 조회했는지에 추적할 카럼 (보통 기본키)
+* `last_run_metadata_path` : 어디까지 조회했는지에 정보를 저장할 경로
+* `statement` : 실행할 sql문 (생성한 인덱스에 맞게 칼럼들을 가져오면 됨)
+
+**`filter`**
+
+```
+filter {
+  mutate {
+    copy => { "id" => "[@metadata][_id]"}
+    remove_field => ["@version", "@timestamp"] }
+}
+```
+
+* `copy` : id값을 복사
+* `remove_field` : 불필요한 필드 제거
+
+**`output`**
+
+```
+output {
+  elasticsearch {
+    hosts => ["133.186.210.108:9200"]
+    index => "book_pub_product_dev"
+    document_id => "%{[@metadata][_id]}"
+    doc_as_upsert => true
+    action => update
+  }
+ stdout {
+    codec => rubydebug
+ }
+}
+```
+
+* `hosts` : ElasticSearch 주소
+* `index` : 정보를 저장할 인덱스 명
+* `document_id` : 문서 아이디
+* `doc_as_upsert` : 문서가 새로운 경우 새로 생성
+* `action` : update
+
+<br/>
+
+**설정**
+1. mysql-connector 설치
+```
+wget 'https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.18.tar.gz'
+tar -xvf ./mysql-connector-java-8.0.18.tar.gz
+rm -rf ./mysql-connector-java-8.0.18.tar.gz 
+cp mysql-connector-java-8.0.18/mysql-connector-java-8.0.18.jar /usr/share/logstash/bin/”원하는경파일명”
+
+mv ./mysql-connector-java-8.0.18/mysql-connector-java-8.0.18.jar ./lib/mysql-connector-java-8.0.18.jar 
+
+rm -rf mysql-connector-java-8.0.18
+```
+2. dat 파일 생성
+```
+$ mkdir index_metadata
+$ cd index_metadata
+$ vi book-pub-product.dat
+
+--- 1   // 입력 후 저장
+
+$ chmod 777 book-pub-product.dat
+```
+3. 임시 파일 생성
+```
+$ mkdir book-pub-tmp
+```
+4. conf파일 실행
+```
+$ ./bin/logstash --path.data ./book-pub-tmp -f ./config/book-pub.conf
+```
+
+<Br/>
+
+`./config/pipeline.yml` 파일에 등록시켜 여러 `*.conf`을 실행시키는게 정석이라고 봤지만 무슨 이유에서인지 잘 안되서 하나의 `conf`를 바로 실행시키는것으로 구현
 
 
 
