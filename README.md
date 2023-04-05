@@ -12,6 +12,7 @@ NHN Academy 광주 1기 인증 과정 팀 프로젝트 결과를 정리한 레�
 
 - [DB-MySQL](https://github.com/unhas01/Book-Pub/tree/main/DB)
 - [KeyManager](https://github.com/unhas01/Book-Pub/tree/main/KeyManager)
+- [Front](https://github.com/unhas01/Book-Pub/tree/main/Front)
 
 ---
 
@@ -25,3 +26,4 @@ NHN Academy 광주 1기 인증 과정 팀 프로젝트 결과를 정리한 레�
 - [최근본상품](https://github.com/unhas01/Book-Pub/tree/main/%EC%B5%9C%EA%B7%BC%20%EB%B3%B8%20%EC%83%81%ED%92%88)
 - [태그](https://github.com/unhas01/Book-Pub/tree/main/%ED%83%9C%EA%B7%B8)
 - [검색-Elasticsearch](https://github.com/unhas01/Book-Pub/tree/main/Elasticsearch)
+- [JPA Auditing](https://github.com/unhas01/Book-Pub/tree/main/JPA%20Auditing)
