@@ -671,6 +671,50 @@ $ ./bin/logstash --path.data ./book-pub-tmp -f ./config/book-pub.conf
 
 `./config/pipeline.yml` 파일에 등록시켜 여러 `*.conf`을 실행시키는게 정석이라고 봤지만 무슨 이유에서인지 잘 안되서 하나의 `conf`를 바로 실행시키는것으로 구현
 
+---
+
+### 📌 검색 결과 화면
+
+1. 일반적인 단어 검색 [`희망`]
+
+<img width="1156" alt="스크린샷 2023-04-09 오후 2 36 02" src="https://user-images.githubusercontent.com/87689191/230756825-e3356d46-f726-463b-b721-083a9ad43439.png">
+
+<br/>
+
+2. 초성 단어 검색 [`ㅎㅁ`]
+
+<img width="1188" alt="스크린샷 2023-04-09 오후 2 36 13" src="https://user-images.githubusercontent.com/87689191/230756889-23cc36ed-f6c3-47aa-88e2-1eb2899d9874.png">
+
+
+<br/>
+
+3. 오타 단어 검색 [`gmlakd`]
+
+<img width="1202" alt="스크린샷 2023-04-09 오후 2 36 21" src="https://user-images.githubusercontent.com/87689191/230756909-ac8b029f-13f1-4567-941c-7c4180139613.png">
+
+<br/>
+
+4. 동의어 검색 1 [`자바`]
+- `자바`, `java`의 동의어를 설정 해 놓은 상태
+
+<img width="1203" alt="스크린샷 2023-04-09 오후 2 35 36" src="https://user-images.githubusercontent.com/87689191/230757293-cd60fa2e-15d3-49cf-9786-4a81150555f3.png">
+
+<br/>
+
+5. 동의어 검색 2 [`정처기`]
+- `정보처리기사`, `정처기`의 동의어를 설정 해 놓은 상태
+
+<img width="1180" alt="스크린샷 2023-04-09 오후 2 35 46" src="https://user-images.githubusercontent.com/87689191/230757360-af0da74e-f1fe-42f6-9a56-f9f651a11bdc.png">
+
+
+<br/>
+
+
+6. 통합 검색 ['주문']
+
+<img width="1200" alt="스크린샷 2023-04-09 오후 2 36 33" src="https://user-images.githubusercontent.com/87689191/230757391-90b3ffb6-6bdc-404a-9fc4-b8f11fa67527.png">
+
+
 
 
 
