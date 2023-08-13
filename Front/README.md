@@ -18,7 +18,8 @@
 ---
 ### 메인페이지
 
-![KakaoTalk_Photo_2023-04-13-14-04-57](https://user-images.githubusercontent.com/87689191/231658949-32c9fee6-13ea-40c6-abe6-794061006c84.png)
+![screencapture-bookpub-store-2023-08-13-20_46_27](https://github.com/unhas01/Book-Pub/assets/87689191/bc9589b5-2c0b-40d5-861c-eae9e1ca7568)
+
 
 ---
 
