@@ -18,24 +18,24 @@
 ---
 ### 메인페이지
 
-![screencapture-bookpub-store-2023-08-13-20_46_27](https://github.com/unhas01/Book-Pub/assets/87689191/bc9589b5-2c0b-40d5-861c-eae9e1ca7568)
+![메인화면](./image/메인화면.png)
 
 
 ---
 
 ### 메인페이지 - 네비게이션바
 
-![image](https://user-images.githubusercontent.com/87689191/229728084-c15da450-2e48-4384-af2d-73785c667b50.png)
-
 1. 분야찾기 (카테고리)
 
-![image](https://user-images.githubusercontent.com/87689191/229727450-6f50cd4a-f813-46dd-9206-4c994a2434bb.png)
+![네비게이션-카테고리](./image/네비게이션-카테고리.png)
+
 
 <br/>
 
 2. 유형별찾기 (상품타입)
 
-![image](https://user-images.githubusercontent.com/87689191/229727882-6775e29f-7960-42f6-95e0-955af77cd492.png)
+![네비게이션-유형별(상품타입)](./image/네비게이션-유형별(상품타입).png)
+
 
 <Br/>
 
@@ -43,20 +43,21 @@
     - 이달의 쿠폰
     - 등급별 쿠폰
 
-![image](https://user-images.githubusercontent.com/87689191/229728567-6eeadd1b-92f4-4428-9a23-3d2a7f468c5b.png)
+![네비게이션-이벤트](./image/네비게이션-이벤트.png)
 
 <br/>
 
 **이달의 쿠폰**
 
-![screencapture-book-pub-shop-coupon-month-2023-04-04-17_13_55](https://user-images.githubusercontent.com/87689191/229731928-8c36beb1-4f61-4880-a46b-dfc390d5bcc4.png)
+![이달의쿠폰](./image/이달의쿠폰.png)
 
 
 <br/>
 
 **등급별 쿠폰**
 
-![screencapture-book-pub-shop-tier-coupons-2023-04-04-17_30_40](https://user-images.githubusercontent.com/87689191/229734435-f5af0068-6f05-4711-b03e-9ea260454279.png)
+![등급쿠폰](./image/등급쿠폰.png)
+
 
 
 ---
@@ -65,17 +66,23 @@
 
 1. FAQ
 
-![image](https://user-images.githubusercontent.com/87689191/229729125-7f52ea09-be2e-45e9-96ad-8f947466b777.png)
+![FAQ](./image/FAQ.png)
 
-![image](https://user-images.githubusercontent.com/87689191/229729666-8c84338e-2612-4814-ba0c-fdfff1d1cb80.png)
+<br/>
+
+![FAQ-내용](./image/FAQ-내용.png)
+
+
 
 <br/>
 
 2. 공지사항
 
-![image](https://user-images.githubusercontent.com/87689191/229729850-ac41921f-d3df-4525-9561-aedea6a1b7a6.png)
+![공지사항](./image/공지사항.png)
 
-![image](https://user-images.githubusercontent.com/87689191/229730059-8d8742da-b9f3-4dad-bfee-7c232a1f49fd.png)
+<br/>
+
+![공지사항-내용](./image/공지사항-내용.png)
 
 ---
 
@@ -83,23 +90,23 @@
 
 - 카테고리별 조회
 
-![image](https://user-images.githubusercontent.com/87689191/229740797-f87929f8-963e-40dc-b546-1a2d9239249d.png)
+![상품목록-카테고리조회](./image/상품목록-카테고리조회.png)
 
 - 유형별 조회
 
-![image](https://user-images.githubusercontent.com/87689191/229741059-b14c7bfc-f9cd-4ca1-a051-82addbc9695d.png)
+![상품목록-유형별조회](./image/상품목록-유형별조회.png)
+
 
 ----
 
 
 ### 회원가입
 
-![screencapture-book-pub-shop-signup-2023-04-04-18_21_11](https://user-images.githubusercontent.com/87689191/229747436-bf1c75ba-7d38-4d74-87ef-fde4a573f25f.png)
+![회원가입](./image/회원가입.png)
 
-- 인증번호 문자는 Dooray 메신저 사용
+- 인증번호 문자는 Dooray 메신저를 사용
 
-![image](https://user-images.githubusercontent.com/87689191/
-229747788-c83865d9-9c61-496e-bbc3-6d2a264cf846.png)
+![두레이-인증번호](./image/두레이-인증번호.png)
 
 ---
 
