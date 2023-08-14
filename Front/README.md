@@ -112,7 +112,7 @@
 
 ### 로그인
 
-![image](https://user-images.githubusercontent.com/87689191/229748032-23398022-c2ff-4489-9626-e19eae6b9219.png)
+![로그인](./image/로그인.png)
 
 ---
 
@@ -120,14 +120,14 @@
 
 **회원 정보**
 
-![screencapture-book-pub-shop-members-2023-04-04-22_03_57](https://user-images.githubusercontent.com/87689191/229800547-9aff95b2-083f-43f9-aedc-ce7c77c1110c.png)
+![마이페이지-회원정보](./image/마이페이지-회원정보.png)
 
 
 <br/>
 
 **포인트 사용내역**
 
-![image](https://user-images.githubusercontent.com/87689191/229801523-a5eccea8-4910-4c48-9996-71b4a91a4486.png)
+![마이페이지-포인트](./image/마이페이지-포인트.png)
 
 <br/>
 
