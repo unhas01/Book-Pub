@@ -136,13 +136,13 @@
 
 **E-Book**
 
-![image](https://user-images.githubusercontent.com/87689191/229801881-848b981c-73ef-4814-b72c-0de5e029f8c4.png)
+![마이페이지-EBook](./image/마이페이지-EBook.png)
 
 <br/>
 
 **위시리스트**
 
-![image](https://user-images.githubusercontent.com/87689191/229802025-f745821d-fb08-43d4-aae7-7575df3cae2a.png)
+![마이페이지-위시리스트](./image/마이페이지-위시리스트.png)
 
 <Br/>
 
