@@ -180,7 +180,7 @@
 
 **주문 내역**
 
-![image](https://user-images.githubusercontent.com/87689191/229804853-d75c872a-5169-4381-ac28-9703015b4497.png)
+![마이페이지-주문내역](./image/마이페이지-주문내역.png)
 
 ----
 
@@ -188,13 +188,13 @@
 
 **통계**
 
-![screencapture-book-pub-shop-admin-2023-04-04-22_22_30](https://user-images.githubusercontent.com/87689191/229806401-5819d6e4-95bf-4911-8e00-ed3dcd78cf91.png)
+![관리자-통계](./image/관리자-통계.png)
 
 <br/>
 
 **회원 목록**
 
-![image](https://user-images.githubusercontent.com/87689191/229806761-2b729143-99ee-4751-8b2b-26e5f256babb.png)
+![관리자-회원목록](./image/관리자-회원목록.png)
 
 
 <br/>
