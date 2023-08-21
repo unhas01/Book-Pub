@@ -200,40 +200,66 @@
 <br/>
 
 
-**회원 등급**
+**회원 등급 목록**
 
-![image](https://user-images.githubusercontent.com/87689191/229806912-f8b80dcb-1825-434e-b8aa-115c2fdb41c5.png)
+![관리자-회원등급목록](./image/관리자-회원등급목록.png)
+
+![관리자-회원등급모달](./image/관리자-회원등급모달.png)
 
 <br/>
 
 
 **저자 목록**
 
-![image](https://user-images.githubusercontent.com/87689191/229807112-5433d2df-0ae8-477d-bff9-fa63558701f5.png)
+![관리자-저자목록](./image/관리자-저자목록.png)
+
+![관리자-저자등록모달](./image/관리자-저자등록모달.png)
+
+![관리자-저자수정모달](./image/관리자-저자수정모달.png)
 
 <br/>
 
 **상품 정책**
 
-![image](https://user-images.githubusercontent.com/87689191/229807392-4b5d4bb0-e0b0-4569-88d8-3054ed6cd62c.png)
+
+![관리자-상품정책목록](./image/관리자-상품정책목록.png)
+
+![관리자-상품정책등록모달](./image/관리자-상품정책등록모달.png)
+
+![관리자-상품정책수정모달](./image/관리자-상품정책수정모달.png)
+
 
 <br/>
 
 **상품 목록**
 
-![image](https://user-images.githubusercontent.com/87689191/229807508-8782f445-3e21-4c9e-9dcf-84198e114369.png)
+![관리자-상품목록](./image/관리자-상품목록.png)
+
+![관리자-상품등록모달](./image/관리자-상품등록모달.png)
+
+<br/>
+
+**관리자 상품 상세**
+
+![관리자-상품상세조회](./image/관리자-상품상세조회.png)
 
 <br/>
 
 **태그 목록**
 
-![image](https://user-images.githubusercontent.com/87689191/229807650-e78ad4aa-4261-4ba7-a2b6-f6693ddfa871.png)
+![관리자-태그목록](./image/관리자-태그목록.png)
+
+![관리자-태그등록모달](./image/관리자-태그등록모달.png)
+
+![관리자-태그수정모달](./image/관리자-태그수정모달.png)
 
 <Br/>
 
 **매입 목록**
 
-![image](https://user-images.githubusercontent.com/87689191/229807816-0486a5cc-545f-4878-97a1-9699179b8689.png)
+![관리자-매입이력목록](./image/관리자-매입이력목록.png)
+
+![관리자-매입등록모달](./image/관리자-매입등록모달.png)
 
 <br/>
 
