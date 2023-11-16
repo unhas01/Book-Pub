@@ -204,6 +204,20 @@ $ mv ./mysql-connector-java-8.0.18/mysql-connector-java-8.0.18.jar ./lib/mysql-c
 $ rm -rf mysql-connector-java-8.0.18
 ```
 
+> /usr/share/logstash/bin/book-pub 에 저장
+
+2. index metadata 설정 && .dat 파일 생성
+
+```
+$ mkdir index_metadata
+$ vi book_pub_product_prod.dat
+```
+
+아래 내용 입력 후 저장
+```
+--- 1
+```
+
 --- 
 
 ### 📌 인덱스, logstash 설정
@@ -488,5 +502,19 @@ output {
     codec => rubydebug
  }
 }
+```
+
+### 📌 conf 실행
+
+- 임시 디렉토리 생성
+
+```console
+$ mkdir book-pub-tmp
+```
+
+- *.conf 파일 실행
+
+```console
+$ bin/logstash -f config/book-pub-product-prod.conf --path.data book-pub-tmp
 ```
 
